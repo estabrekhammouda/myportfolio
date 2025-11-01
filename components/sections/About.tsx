@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
 import { 
   MapPin, 
@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export default function About() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -23,19 +23,19 @@ export default function About() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: [0.4, 0, 0.2, 1]
       }
     }
   };
 
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, rotate: -10 },
     visible: {
       opacity: 1,
@@ -43,7 +43,7 @@ export default function About() {
       rotate: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
+        ease: [0.4, 0, 0.2, 1]
       }
     }
   };
@@ -58,7 +58,7 @@ export default function About() {
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3]
           }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
         />
         <motion.div 
           className="absolute bottom-32 right-16 w-32 h-32 bg-pink-200/30 dark:bg-pink-500/10 rounded-full blur-xl"
@@ -66,7 +66,7 @@ export default function About() {
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.5, 0.2]
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1], delay: 2 }}
         />
         <motion.div 
           className="absolute top-1/2 left-1/2 w-16 h-16 bg-blue-200/20 dark:bg-blue-500/10 rounded-full blur-lg"
@@ -74,7 +74,7 @@ export default function About() {
             x: [0, 30, 0],
             y: [0, -20, 0]
           }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 5, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
         />
       </div>
 
@@ -255,7 +255,7 @@ export default function About() {
                   <motion.div
                     className="absolute top-4 right-4 w-12 h-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg"
                     animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 3, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
                   >
                     <Code2 className="w-6 h-6 text-purple-600" />
                   </motion.div>
@@ -266,7 +266,7 @@ export default function About() {
                       rotate: [0, 360],
                       scale: [1, 1.1, 1]
                     }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 4, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
                   >
                     <Sparkles className="w-5 h-5 text-pink-500" />
                   </motion.div>
@@ -290,7 +290,7 @@ export default function About() {
                       duration: 3 + Math.random() * 2,
                       repeat: Infinity,
                       delay: Math.random() * 2,
-                      ease: "easeInOut",
+                      ease: [0.4, 0, 0.6, 1],
                     }}
                   />
                 ))}
