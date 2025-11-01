@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { 
   Code2, 
   Briefcase, 
@@ -14,7 +14,7 @@ import { skills, experience, deviconMap } from '@/lib/constants';
 const Skills: React.FC = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -25,26 +25,26 @@ const Skills: React.FC = () => {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: [0.4, 0, 0.2, 1]
       }
     }
   };
 
-  const skillItemVariants = {
+  const skillItemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: "easeOut"
+        ease: [0.4, 0, 0.2, 1]
       }
     }
   };
@@ -59,7 +59,7 @@ const Skills: React.FC = () => {
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.5, 0.2]
           }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 5, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
         />
         <motion.div 
           className="absolute bottom-20 left-16 w-28 h-28 bg-indigo-200/30 dark:bg-indigo-500/10 rounded-full blur-xl"
@@ -67,7 +67,7 @@ const Skills: React.FC = () => {
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3]
           }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 4, repeat: Infinity, ease: [0.4, 0, 0.6, 1], delay: 1 }}
         />
         <motion.div 
           className="absolute top-1/3 left-1/4 w-20 h-20 bg-purple-200/20 dark:bg-purple-500/10 rounded-full blur-lg"
@@ -75,7 +75,7 @@ const Skills: React.FC = () => {
             x: [0, 25, 0],
             y: [0, -15, 0]
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
         />
       </div>
 
@@ -166,7 +166,7 @@ const Skills: React.FC = () => {
                                   scale: hoveredSkill === skillName ? 1 : 0.5,
                                   y: hoveredSkill === skillName ? 0 : 10
                                 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                               >
                                 <div className="bg-white dark:bg-slate-700 p-3 rounded-2xl shadow-xl border border-blue-200/50 dark:border-blue-500/30 flex items-center justify-center backdrop-blur-sm">
                                   <i className={`${iconClass} text-3xl`}></i>
@@ -201,7 +201,7 @@ const Skills: React.FC = () => {
                       duration: 2.5 + Math.random() * 1.5,
                       repeat: Infinity,
                       delay: Math.random() * 2,
-                      ease: "easeInOut",
+                      ease: [0.4, 0, 0.6, 1],
                     }}
                   />
                 ))}
@@ -306,7 +306,7 @@ const Skills: React.FC = () => {
                       duration: 4 + Math.random() * 2,
                       repeat: Infinity,
                       delay: Math.random() * 2,
-                      ease: "easeInOut",
+                      ease: [0.4, 0, 0.6, 1],
                     }}
                   >
                     <Sparkles className="w-4 h-4 text-indigo-400/60 dark:text-indigo-300/40" />
