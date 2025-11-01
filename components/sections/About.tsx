@@ -136,7 +136,7 @@ export default function About() {
               className="flex flex-wrap gap-3"
               variants={itemVariants}
             >
-              {['Full-Stack Development', 'Mobile Apps', 'System Design', 'Problem Solving'].map((skill, index) => (
+              {['Full-Stack Development', 'Mobile Apps', 'System Design', 'Problem Solving',"UI Design"].map((skill, index) => (
                 <motion.span
                   key={skill}
                   className="px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-800/30 dark:to-pink-800/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-500/30"
@@ -206,7 +206,7 @@ export default function About() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-green-600 dark:text-green-400" />
-                    <span className="text-slate-700 dark:text-slate-300">istabrek.hamouda200@gmail.com</span>
+                    <span className="text-slate-700 dark:text-slate-300">contact.estabrek@gmail.com</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-green-600 dark:text-green-400" />

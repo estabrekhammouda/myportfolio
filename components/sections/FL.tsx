@@ -278,8 +278,7 @@ export default function FemaleLead() {
                 {/* Dynamic Tech Stack Icons using randomly selected skills */}
                 {featuredSkills.map((skill, index) => {
                   const position = iconPositions[index];
-                  const colors = colorMap[position.color];
-                  
+                    const colors = colorMap[position.color as keyof typeof colorMap];
                   return (
                     <motion.div
                       key={skill}

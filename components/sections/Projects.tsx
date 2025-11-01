@@ -4,7 +4,7 @@ import ProjectCard from '../ui/ProjectCard';
 import { useEffect, useRef, useState } from 'react';
 
 export default function ProjectsSection() {
-  const [visibleProjects, setVisibleProjects] = useState(new Set());
+  const [visibleProjects, setVisibleProjects] = useState<Set<number>>(new Set());
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -12,8 +12,8 @@ export default function ProjectsSection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.dataset.index);
-            setVisibleProjects(prev => new Set([...prev, index]));
+            const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
+            setVisibleProjects(prev => new Set([...Array.from(prev), index]));
           }
         });
       },
@@ -115,25 +115,6 @@ export default function ProjectsSection() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Enhanced Call to Action */}
-        <div className="text-center mt-24 opacity-0 animate-fade-in-up delay-1000">
-          <div className="inline-block space-y-6">
-            <p className="text-slate-300 text-lg">
-              Ready to bring your ideas to life?
-            </p>
-            <button className="group relative overflow-hidden px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 active:scale-95">
-              <span className="relative z-10 flex items-center gap-2">
-                Let's Collaborate
-                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="absolute inset-0 bg-white/20 transform scale-0 group-active:scale-100 transition-transform duration-150 rounded-full"></div>
-            </button>
-          </div>
         </div>
       </div>
 
