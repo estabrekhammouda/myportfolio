@@ -7,7 +7,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="relative px-6 py-12 bg-gradient-to-r from-purple-900 via-pink-900 to-blue-900 text-white overflow-hidden">
+    <footer className="relative px-6 py-8 bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950 overflow-hidden border-t border-purple-500/20">
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div

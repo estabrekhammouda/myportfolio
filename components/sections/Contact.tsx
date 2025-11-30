@@ -2,6 +2,7 @@
 
 import { Mail, Linkedin, Github, Send, Sparkles, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 type ContactCardProps = {
   href: string
@@ -17,7 +18,7 @@ const ContactCard = ({ href, icon: Icon, title, description, isExternal = false,
   
   return (
     <div 
-      className="group animate-fade-in-up"
+      className="group"
       style={{ animationDelay: `${delay}ms` }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -64,15 +65,69 @@ const ContactSection = () => {
   const [ctaHovered, setCtaHovered] = useState(false)
   
   return (
-    <section id="contact" className="relative py-24 px-4 bg-black/20 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-600/5 to-pink-600/5 rounded-full blur-3xl animate-spin-slow" />
+    <section id="contact" className="relative px-6 py-20 bg-gradient-to-br from-slate-900 via-violet-800/40 to-slate-900 overflow-hidden"
+
+>
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px] animate-pulse"></div>
+        
+        {/* Floating Orbs */}
+        <motion.div 
+          className="absolute top-20 left-20 w-32 h-32 border-2 border-indigo-500/20 rounded-full"
+          animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-20 w-24 h-24 border-2 border-purple-500/20 rounded-full"
+          animate={{ rotate: -360, scale: [1, 0.9, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        />
+        
+        {/* Additional Orbs */}
+        <motion.div 
+          className="absolute top-1/2 left-10 w-20 h-20 bg-indigo-500/10 rounded-full blur-xl"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
+        />
+        <motion.div 
+          className="absolute bottom-32 right-16 w-32 h-32 bg-purple-500/10 rounded-full blur-xl"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1], delay: 2 }}
+        />
+        
+        {/* Animated Particles */}
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-indigo-400/40 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1.5, 0],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
       </div>
       
-      <div className="relative max-w-6xl mx-auto text-center">
+      <div className="relative z-10 max-w-6xl mx-auto text-center">
         {/* Enhanced header */}
         <div className="mb-16 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm rounded-full border border-white/10 mb-6">
@@ -152,11 +207,7 @@ const ContactSection = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-50 group-hover:opacity-75 transition-opacity duration-300 scale-110" />
               
               <span className="relative">Send Message</span>
-              <Send size={20} className={`relative transition-transform duration-300 ${ctaHovered ? 'translate-x-1' : ''}`} />
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-full" />
-            </a>
+              <Send size={20} className={`relative transition-transform duration-300 ${ctaHovered ? 'translate-x-1' : ''}`} />            </a>
             
             <span className="text-gray-400 text-sm">or</span>
             
@@ -194,15 +245,6 @@ const ContactSection = () => {
           }
         }
         
-        @keyframes spin-slow {
-          from {
-            transform: translate(-50%, -50%) rotate(0deg);
-          }
-          to {
-            transform: translate(-50%, -50%) rotate(360deg);
-          }
-        }
-        
         .animate-fade-in-up {
           animation: fade-in-up 0.6s ease-out forwards;
           opacity: 0;
@@ -210,10 +252,6 @@ const ContactSection = () => {
         
         .animate-gradient-x {
           animation: gradient-x 3s ease infinite;
-        }
-        
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
         }
       `}</style>
     </section>

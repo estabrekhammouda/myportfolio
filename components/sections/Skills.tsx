@@ -50,7 +50,9 @@ const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="relative px-6 py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-900/20 dark:to-slate-900 overflow-hidden">
+    <section id="skills" className="relative px-6 py-20 bg-gradient-to-br from-slate-900 via-pink-900/25 to-slate-900 overflow-hidden"
+
+>
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 

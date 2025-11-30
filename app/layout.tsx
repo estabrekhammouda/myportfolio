@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Navbar from '@/components/ui/Navbar'
 import Footer from '@/components/ui/Footer'
+import WelcomePopup from '@/components/ui/WelcomePopup'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-50`}>
+        <WelcomePopup />
         <Navbar />
         <main className="min-h-screen pt-20">
           {children}

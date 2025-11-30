@@ -5,6 +5,7 @@ import Button from '../ui/button';
 import SocialSidebar from '../ui/SocialSidebar';
 import ScrollDots from '../ui/ScrollDots';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { 
   Code2, 
   Database, 
@@ -15,20 +16,20 @@ import {
 
 import { skills, deviconMap } from '@/lib/constants';
 
-// Randomly select 8 featured skills from your skills array
 const getFeaturedSkills = () => {
   const allSkills = skills.flat();
   const skillsWithIcons = allSkills.filter(skill => deviconMap[skill]);
-  
-  // Shuffle and pick 8 random skills
-  const shuffled = skillsWithIcons.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, 8);
+  return skillsWithIcons.slice(0, 8);
 };
 
 export default function FemaleLead() {
+  const [mounted, setMounted] = useState(false);
   const featuredSkills = getFeaturedSkills();
 
-  // Define positions and animations for the floating icons
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const iconPositions = [
     { className: "absolute -top-16 -right-16 w-24 h-24", animation: { y: [0, -12, 0], rotate: [0, 8, 0] }, color: "cyan" },
     { className: "absolute top-1/2 -left-20 w-20 h-20", animation: { x: [-6, 6, -6], scale: [1, 1.05, 1] }, color: "yellow" },
@@ -51,28 +52,48 @@ export default function FemaleLead() {
     teal: { border: "border-teal-400/20", text: "text-teal-400" }
   };
 
+  const particlePositions = [
+    { left: 10, top: 20 },
+    { left: 30, top: 50 },
+    { left: 60, top: 15 },
+    { left: 80, top: 70 },
+    { left: 25, top: 85 },
+    { left: 70, top: 40 },
+    { left: 45, top: 60 },
+    { left: 90, top: 30 },
+  ];
+
+  const floatingParticlePositions = [
+    { left: 15, top: 25 },
+    { left: 35, top: 55 },
+    { left: 65, top: 20 },
+    { left: 85, top: 75 },
+    { left: 20, top: 80 },
+    { left: 75, top: 45 },
+    { left: 50, top: 65 },
+    { left: 95, top: 35 },
+    { left: 40, top: 10 },
+    { left: 55, top: 90 },
+  ];
+
   return (
     <>
-      {/* Add Devicon CDN */}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
       
       <motion.div
         id="home"
-        className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden"
+        className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900 relative overflow-hidden"
         initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}  
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
         <SocialSidebar />
         <ScrollDots />
 
-        {/* Enhanced Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Animated Grid */}
           <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px] animate-pulse"></div>
           
-          {/* Floating Orbs */}
           <motion.div 
             className="absolute top-20 left-20 w-32 h-32 border-2 border-purple-500/20 rounded-full"
             animate={{ rotate: 360, scale: [1, 1.1, 1] }}
@@ -84,14 +105,13 @@ export default function FemaleLead() {
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           />
           
-          {/* Animated Particles */}
-          {[...Array(8)].map((_, i) => (
+          {mounted && particlePositions.map((pos, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-purple-400/40 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${pos.left}%`,
+                top: `${pos.top}%`,
               }}
               animate={{
                 y: [0, -30, 0],
@@ -99,9 +119,9 @@ export default function FemaleLead() {
                 scale: [0, 1.5, 0],
               }}
               transition={{
-                duration: 4 + Math.random() * 3,
+                duration: 4 + i * 0.5,
                 repeat: Infinity,
-                delay: Math.random() * 3,
+                delay: i * 0.4,
                 ease: "easeInOut",
               }}
             />
@@ -111,7 +131,6 @@ export default function FemaleLead() {
         <div className="flex items-center justify-center min-h-screen px-4 md:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl gap-16">
 
-            {/* Enhanced Left Side - Animated Text Block */}
             <motion.div
               className="flex-1 flex flex-col items-center lg:items-start justify-center text-center lg:text-left space-y-8"
               initial={{ opacity: 0, x: -50 }}
@@ -119,7 +138,6 @@ export default function FemaleLead() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              {/* Enhanced Badge */}
               <motion.div 
                 className="inline-flex items-center gap-4 bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl rounded-2xl px-8 py-4 border border-purple-400/30 shadow-2xl"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -152,7 +170,6 @@ export default function FemaleLead() {
                 </div>
               </motion.div>
 
-              {/* Enhanced Main Title */}
               <motion.div 
                 className="space-y-4"
                 initial={{ opacity: 0, y: 20 }}
@@ -170,7 +187,6 @@ export default function FemaleLead() {
                 </p>
               </motion.div>
 
-              {/* Enhanced Info Tags */}
               <motion.div 
                 className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
@@ -193,7 +209,6 @@ export default function FemaleLead() {
                 </motion.div>
               </motion.div>
 
-              {/* Enhanced Buttons */}
               <motion.div 
                 className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial={{ opacity: 0, y: 20 }}
@@ -212,7 +227,6 @@ export default function FemaleLead() {
               </motion.div>
             </motion.div>
 
-            {/* Enhanced Right Side - Profile & Tech Stack */}
             <motion.div
               className="flex-1 flex justify-center lg:justify-end relative"
               initial={{ opacity: 0, x: 50 }}
@@ -221,9 +235,7 @@ export default function FemaleLead() {
               viewport={{ once: true }}
             >
               <div className="relative group">
-                {/* Main Profile Image Container - Made Bigger */}
                 <div className="w-96 h-96 md:w-[28rem] md:h-[28rem] relative">
-                  {/* Animated Gradient Border */}
                   <motion.div 
                     className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 p-2 rounded-3xl shadow-2xl"
                     animate={{ 
@@ -245,10 +257,8 @@ export default function FemaleLead() {
                         className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
                         priority
                       />
-                      {/* Enhanced Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 via-transparent to-blue-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       
-                      {/* Shine Effect */}
                       <motion.div
                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100"
                         animate={{ x: ["-100%", "100%"] }}
@@ -257,7 +267,6 @@ export default function FemaleLead() {
                     </div>
                   </motion.div>
 
-                  {/* Enhanced Rotating Rings */}
                   <motion.div
                     className="absolute inset-0 border-2 border-purple-500/30 rounded-3xl"
                     animate={{ rotate: 360 }}
@@ -275,17 +284,16 @@ export default function FemaleLead() {
                   />
                 </div>
 
-                {/* Dynamic Tech Stack Icons using randomly selected skills */}
                 {featuredSkills.map((skill, index) => {
                   const position = iconPositions[index];
-                    const colors = colorMap[position.color as keyof typeof colorMap];
+                  const colors = colorMap[position.color as keyof typeof colorMap];
                   return (
                     <motion.div
                       key={skill}
                       className={`${position.className} bg-gradient-to-br from-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl flex items-center justify-center ${colors.border} shadow-2xl`}
                       animate={position.animation}
                       transition={{ 
-                        duration: 3 + Math.random() * 2,
+                        duration: 3 + index * 0.3,
                         repeat: Infinity,
                         ease: "easeInOut",
                         delay: index * 0.3
@@ -297,7 +305,6 @@ export default function FemaleLead() {
                           {deviconMap[skill] ? (
                             <i className={`${deviconMap[skill]} text-3xl`}></i>
                           ) : (
-                            // Fallback icons for skills without devicons
                             skill === 'MongoDB' ? <Database className="w-5 h-5" /> :
                             skill.includes('React Native') || skill.includes('Mobile') ? <Smartphone className="w-4 h-4" /> :
                             <Code2 className="w-5 h-5" />
@@ -311,37 +318,37 @@ export default function FemaleLead() {
                   );
                 })}
 
-                {/* Enhanced Floating Particles */}
-                <div className="absolute inset-0 pointer-events-none">
-                  {[...Array(10)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 bg-gradient-to-r from-purple-400/40 to-pink-400/40 rounded-full"
-                      style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                      }}
-                      animate={{
-                        y: [0, -25, 0],
-                        opacity: [0, 1, 0],
-                        scale: [0, 1.5, 0],
-                        rotate: [0, 180, 360],
-                      }}
-                      transition={{
-                        duration: 4 + Math.random() * 3,
-                        repeat: Infinity,
-                        delay: Math.random() * 3,
-                        ease: "easeInOut",
-                      }}
-                    />
-                  ))}
-                </div>
+                {mounted && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {floatingParticlePositions.map((pos, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 bg-gradient-to-r from-purple-400/40 to-pink-400/40 rounded-full"
+                        style={{
+                          left: `${pos.left}%`,
+                          top: `${pos.top}%`,
+                        }}
+                        animate={{
+                          y: [0, -25, 0],
+                          opacity: [0, 1, 0],
+                          scale: [0, 1.5, 0],
+                          rotate: [0, 180, 360],
+                        }}
+                        transition={{
+                          duration: 4 + i * 0.4,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Enhanced CSS Styles */}
         <style jsx>{`
           @keyframes gradient {
             0% { background-position: 0% 50%; }

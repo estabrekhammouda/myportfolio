@@ -49,7 +49,8 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="relative px-6 py-20 bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-purple-900/20 dark:to-slate-900 overflow-hidden">
+    <section id="about"  className="relative px-6 py-20 bg-gradient-to-br from-slate-900 via-purple-900/25 to-slate-900 overflow-hidden"
+>
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div 
@@ -166,7 +167,7 @@ export default function About() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-800 dark:text-slate-200">Education</h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Université de Monastir</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">ISIMM</p>
                   </div>
                 </div>
                 <p className="text-purple-600 dark:text-purple-400 font-medium">Software Engineering</p>
