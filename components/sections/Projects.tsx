@@ -18,13 +18,44 @@ type GitHubRepo = {
   fork: boolean;
 };
 
+// Define the GitHub API response type
+type GitHubApiRepo = {
+  id: number;
+  name: string;
+  description: string | null;
+  html_url: string;
+  homepage: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  topics: string[];
+  created_at: string;
+  updated_at: string;
+  fork: boolean;
+};
+
 export default function ProjectsSection() {
   const [projects, setProjects] = useState<GitHubRepo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [direction, setDirection] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  // Fetch GitHub repositories - INCLUDING FORKS
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const particlePositions = [
+    { left: 10, top: 20 },
+    { left: 30, top: 50 },
+    { left: 60, top: 15 },
+    { left: 80, top: 70 },
+    { left: 25, top: 85 },
+    { left: 70, top: 40 },
+    { left: 45, top: 60 },
+    { left: 90, top: 30 },
+  ];
+
   useEffect(() => {
     const fetchGitHubProjects = async () => {
       try {
@@ -34,12 +65,11 @@ export default function ProjectsSection() {
           throw new Error('Failed to fetch repositories');
         }
         
-        const data = await response.json();
+        const data: GitHubApiRepo[] = await response.json();
         
-        // Show ALL repositories including forks
         const allProjects = data
-          .filter((repo: any) => repo && repo.name) // Just check basic validity
-          .map((repo: any) => ({
+          .filter((repo: GitHubApiRepo) => repo && repo.name)
+          .map((repo: GitHubApiRepo) => ({
             id: repo.id,
             name: repo.name,
             description: repo.description,
@@ -54,7 +84,6 @@ export default function ProjectsSection() {
             fork: repo.fork || false,
           }))
           .sort((a: GitHubRepo, b: GitHubRepo) => {
-            // Sort by stars first, then by update date
             if (b.stargazers_count !== a.stargazers_count) {
               return b.stargazers_count - a.stargazers_count;
             }
@@ -139,10 +168,8 @@ export default function ProjectsSection() {
   return (
     <section 
       id="projects" 
-      className="relative px-6 py-20 bg-gradient-to-br from-slate-900 via-fuchsia-900/25 to-slate-900 overflow-hidden"
-
+      className="relative px-6 py-20 bg-gradient-to-br from-slate-900 via-violet-900/25 to-slate-900 overflow-hidden"
     >
-      {/* Enhanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px] animate-pulse"></div>
         
@@ -174,13 +201,13 @@ export default function ProjectsSection() {
           transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1], delay: 2 }}
         />
         
-        {[...Array(8)].map((_, i) => (
+        {mounted && particlePositions.map((pos, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-violet-400/40 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${pos.left}%`,
+              top: `${pos.top}%`,
             }}
             animate={{
               y: [0, -30, 0],
@@ -188,9 +215,9 @@ export default function ProjectsSection() {
               scale: [0, 1.5, 0],
             }}
             transition={{
-              duration: 4 + Math.random() * 3,
+              duration: 4 + i * 0.5,
               repeat: Infinity,
-              delay: Math.random() * 3,
+              delay: i * 0.4,
               ease: "easeInOut",
             }}
           />
@@ -198,7 +225,6 @@ export default function ProjectsSection() {
       </div>
       
       <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -233,9 +259,7 @@ export default function ProjectsSection() {
           </motion.p>
         </div>
 
-        {/* Carousel Container */}
         <div className="relative">
-          {/* Navigation Buttons */}
           <button
             onClick={prevProject}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 bg-slate-800/90 backdrop-blur-sm border border-purple-500/30 rounded-full flex items-center justify-center text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-300 hover:scale-110 shadow-lg"
@@ -252,7 +276,6 @@ export default function ProjectsSection() {
             <ChevronRight size={24} />
           </button>
 
-          {/* Card */}
           <div className="relative max-w-sm mx-auto overflow-hidden">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
@@ -270,12 +293,9 @@ export default function ProjectsSection() {
                 className="w-full"
               >
                 <div className="bg-slate-800/70 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden hover:border-purple-500/30 transition-all duration-500 shadow-2xl">
-                  {/* Square Icon/Image Container - 1:1 ratio */}
                   <div className="relative w-full aspect-square bg-gradient-to-br from-slate-900/90 to-slate-800/90 flex items-center justify-center border-b border-slate-700/50">
-                    {/* Decorative background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10"></div>
                     
-                    {/* Icon */}
                     <div className="relative z-10">
                       {currentProject.fork ? (
                         <GitFork size={64} className="text-purple-400" />
@@ -284,7 +304,6 @@ export default function ProjectsSection() {
                       )}
                     </div>
 
-                    {/* Stats overlay - top right */}
                     <div className="absolute top-4 right-4 flex items-center gap-3 bg-slate-900/70 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-700/50">
                       <div className="flex items-center gap-1 text-yellow-400">
                         <Star size={14} />
@@ -297,7 +316,6 @@ export default function ProjectsSection() {
                     </div>
                   </div>
 
-                  {/* Card Body */}
                   <div className="p-5">
                     <div className="flex items-center gap-2 mb-3">
                       {currentProject.fork && (
@@ -326,7 +344,6 @@ export default function ProjectsSection() {
                       {currentProject.description || 'No description available'}
                     </p>
 
-                    {/* Topics/Tags */}
                     {currentProject.topics && currentProject.topics.length > 0 && (
                       <div className="mb-3">
                         <div className="flex flex-wrap gap-2">
@@ -342,7 +359,6 @@ export default function ProjectsSection() {
                       </div>
                     )}
 
-                    {/* Action Buttons */}
                     <div className="flex items-center gap-2 pt-3 border-t border-slate-700/50">
                       <a
                         href={currentProject.html_url}
@@ -371,7 +387,6 @@ export default function ProjectsSection() {
             </AnimatePresence>
           </div>
 
-          {/* Pagination Dots */}
           <div className="flex justify-center gap-2 mt-8">
             {projects.slice(0, 10).map((_, index) => (
               <button
@@ -392,7 +407,6 @@ export default function ProjectsSection() {
             )}
           </div>
 
-          {/* Project Counter */}
           <div className="text-center mt-4">
             <span className="text-slate-400 text-sm">
               {currentIndex + 1} / {projects.length}
