@@ -250,7 +250,7 @@ export default function FemaleLead() {
                   >
                     <div className="overflow-hidden bg-slate-900 rounded-2xl relative h-full">
                       <Image
-                        src="/images/photo1.jpg"
+                        src="/images/photo1.png"
                         alt="Estabrek Hammouda - Software Developer"
                         width={600}
                         height={600}
