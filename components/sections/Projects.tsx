@@ -18,7 +18,6 @@ type GitHubRepo = {
   fork: boolean;
 };
 
-// Define the GitHub API response type
 type GitHubApiRepo = {
   id: number;
   name: string;
@@ -255,7 +254,7 @@ export default function ProjectsSection() {
             viewport={{ once: true }}
             className="text-slate-300 text-lg max-w-2xl mx-auto"
           >
-            Automatically synced from my GitHub • {projects.length} repositories
+            My  Cretations on  GitHub:  A  curated  selection  of  my  most  notable  repositories,  showcasing  my  skills,  creativity,  and  passion  for  coding.
           </motion.p>
         </div>
 
